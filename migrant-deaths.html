@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Migrant Deaths</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <link href="https://api.mapbox.com/mapbox-assembly/v0.24.0/assembly.min.css" rel="stylesheet">
+    <link href="https://api.mapbox.com/mapbox-gl-js/v1.6.0/mapbox-gl.css" rel="stylesheet" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #141F2B;
+            font-family: Arial, Sans-serif;
+            color: #253241;
+        }
+
+        #legend {
+            background-color: rgba(245, 245, 245, 1);
+        }
+
+        h1 {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 10px
+        }
+
+        p {
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #2dc4b2;
+        }
+
+        .row {
+            height: 12px;
+            width: 98%;
+        }
+
+        .colors {
+            background: linear-gradient(to right, #2dc4b2, #43ccde, #52cffe, #80b2f3, #96a4e8, #bf86c4, #d16b6b);
+        }
+
+        .labels {
+            padding-bottom: 40px;
+            width: 100%;
+        }
+
+        .label {
+            width: 13.2%;
+            display: inline-block;
+            text-align: left;
+            font-size: 12px;
+            font-family: Arial, Sans-serif;
+        }
+
+        #radio-color {
+            color: #415873;
+        }
+
+        .radio-container {
+            font-weight: bold;
+            margin-bottom: 4px;
+            margin-right: 16px;
+        }
+
+        #filters {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <script async defer src="https://api.mapbox.com/mapbox-assembly/v0.24.0/assembly.js"></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v1.6.0/mapbox-gl.js"></script>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+
+    <div class="grid absolute h-full w-full">
+        <div class="col col--12 h-full relative">
+            <div id="map" class="w-full h-full"></div>
+            <div id="legend" class="w300 absolute top right mt18 mr18 round shadow-darken10 px18 py18 txt-s none">
+                <h1>Tracking Migrant Deaths (2014 - 2019)</h1>
+                <p>**Define migrant.** The <a href="https://missingmigrants.iom.int/">Missing Migrants Project</a>
+                    tracks incidents
+                    involving
+                    migrants, including refugees and asylum-seekers, who have
+                    died or gone missing in the process of migration towards an international destination. **include
+                    total** 1234567890</p>
+
+                <div id="filters">
+                    <label class="radio-container row1">
+                        <input id="all" name="radio-basic" type="radio" value="all" checked="checked">
+                        <div class="radio radio--s-label mr6" id="radio-color"></div>All Years
+                    </label><br>
+                    <label class="radio-container row2">
+                        <input id="2014" name="radio-basic" type="radio" value="2014">
+                        <div class="radio radio--s-label mr6" id="radio-color"></div>2014
+                    </label>
+                    <label class="radio-container row2">
+                        <input id="2016" name="radio-basic" type="radio" value="2016">
+                        <div class="radio radio--s-label mr6" id="radio-color"></div>2016
+                    </label>
+                    <label class="radio-container row2">
+                        <input id="2018" name="radio-basic" type="radio" value="2018">
+                        <div class="radio radio--s-label mr6" id="radio-color"></div>2018
+                    </label><br>
+                    <label class="radio-container row3">
+                        <input id="2015" name="radio-basic" type="radio" value="2015">
+                        <div class="radio radio--s-label mr6" id="radio-color"></div>2015
+                    </label>
+                    <label class="radio-container row3">
+                        <input id="2017" name="radio-basic" type="radio" value="2017">
+                        <div class="radio radio--s-label mr6" id="radio-color"></div>2017
+                    </label>
+                    <label class="radio-container row3">
+                        <input id="2019" name="radio-basic" type="radio" value="2019">
+                        <div class="radio radio--s-label mr6" id="radio-color"></div>2019
+                    </label>
+                </div>
+                <div class="session">
+                    <strong>Number Dead and Missing</strong>
+                    <div class="row colors row-colors">
+                    </div>
+                    <div class="row labels">
+                        <div class="label">1</div>
+                        <div class="label">5</div>
+                        <div class="label">10</div>
+                        <div class="label">25</div>
+                        <div class="label">50</div>
+                        <div class="label">100</div>
+                        <div class="label">250+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        mapboxgl.accessToken =
+            "pk.eyJ1IjoibGlzZmFuby1tYXBib3giLCJhIjoiY2pvN3IyeGJ2MDFjZzNxcDB3YnJuN3hlbCJ9.r8HK2MZh-AiDtupL5c5s9Q";
+        var map = new mapboxgl.Map({
+            container: "map", // container id
+            style: "mapbox://styles/lisfano-mapbox/ck3dtcooa263c1cnztrl0xy36", // stylesheet location
+            center: [0, 26], // starting position [lng, lat]
+            zoom: 0 // starting zoom
+        });
+
+        map.addControl(new mapboxgl.NavigationControl(), "top-left");
+
+        // when the map is done loading
+        map.on("load", function () {
+            // request GEOJSON data
+            d3.json("data/migrant-deaths.json").then(geojson => {
+                // when loaded
+                console.log(geojson);
+                addLayer(geojson);
+
+                function addLayer(geojson) {
+                    // add the GeoJSON data as a mapbox gl layer
+                    map.addLayer({
+                        id: "deaths",
+                        type: "circle",
+                        source: {
+                            type: "geojson",
+                            data: geojson
+                        },
+                        paint: {
+                            "circle-radius": [
+                                "interpolate",
+                                ["linear"],
+                                ["number", ["get", "DM-T"]],
+                                0, 1.5,
+                                5, 4,
+                                100, 8,
+                                1022, 18
+                            ],
+
+                            "circle-color": [
+                                "interpolate",
+                                ["linear"],
+                                ["number", ["get", "DM-T"]],
+                                0, "#2dc4b2",
+                                1, "#33deca",
+                                5, "#43ccde",
+                                10, "#52cffe",
+                                20, "#69bff8",
+                                25, "#80b2f3",
+                                50, "#96a4e8",
+                                75, "#a995d8",
+                                100, "#bf86c4",
+                                250, "#ce79a9",
+                                500, "#d46f8a",
+                                1000, "#d16b6b"
+                            ],
+                            "circle-opacity": 0.8,
+                            "circle-stroke-color": "#555",
+                            "circle-stroke-width": 0.2,
+                        },
+                    });
+
+                    // radio button interactivity
+                    document.getElementById('filters').addEventListener('change', function (e) {
+                        var year = parseInt(e.target.value);
+
+                        // update the map filter
+                        if (document.getElementById('all').checked) {
+                            map.setFilter('deaths', null)
+                        } else {
+                            map.setFilter('deaths', ['==', ['number', ['get', 'YEAR']], year]);
+                        }
+                    });
+                };
+
+                // var bounds = turf.bbox(geojson);
+                // console.log("bounds: ", bounds);
+
+                // map will flyTo the bounds provided
+                map.fitBounds([-119.63429, -33.5177, 123.00626, 66.92998], {
+                    padding: {
+                        top: 10,
+                        bottom: 30,
+                        left: 50,
+                        right: 360
+                    }
+                });
+
+                var onZoomend = function () {
+                    // set the max bounds
+                    map.setMaxBounds(map.getBounds())
+
+                    // display the legend
+                    d3.select("#legend").classed("none", false);
+
+                    // remove the listener
+                    map.off("zoomend", onZoomend);
+                };
+
+                // when the map is done zooming
+                map.on("zoomend", onZoomend);
+
+                // Create a popup, but don"t add it to the map yet.
+                var popup = new mapboxgl.Popup({
+                    closeButton: false,
+                    closeOnClick: false
+                });
+
+                map.on("mousemove", "deaths", function (e) {
+                    var features = map.queryRenderedFeatures(e.point);
+
+                    // Change the cursor style as a UI affordance.
+                    map.getCanvas().style.cursor = "pointer";
+
+                    //Populate the popup and set its coordinates based on the feature found.
+                    popup.setLngLat(e.features[0].geometry.coordinates)
+                        .setHTML("Number of Dead and Missing: " + "<b>" + (e.features[0]
+                                .properties["DM-T"].toLocaleString()) + "</b><br>" +
+                            "Report Date: " + "<b>" + (e.features[0].properties["DATE"]) +
+                            "</b><br>" +
+                            "Cause of Death: " + "<b>" + (e.features[0].properties["CAUSE"]) +
+                            "</b><br>" +
+                            "Description: " + "<b>" + (e.features[0].properties["DESC"]))
+                        .addTo(map);
+                });
+
+                map.on("mouseleave", "deaths", function () {
+                    map.getCanvas().style.cursor = "";
+                    popup.remove();
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
