@@ -17,10 +17,17 @@
         }
 
         #legend {
-            background-color: rgba(245, 245, 245, 0.9);
+            background-color: rgba(255, 255, 255, 0.9);
+            overflow: auto;
         }
 
         h1 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 8px
+        }
+
+        h2 {
             font-size: 14px;
             font-weight: bold;
             margin-bottom: 10px
@@ -28,12 +35,12 @@
 
         p {
             font-size: 12px;
-            margin-bottom: 10px;
+            margin-bottom: 18px;
         }
 
         a {
             text-decoration: none;
-            color: #27B4A9;
+            color: #22998F;
             font-weight: bold;
         }
 
@@ -51,8 +58,9 @@
         }
 
         .labels {
-            padding-bottom: 40px;
+            padding-bottom: 30px;
             width: 100%;
+            font-weight: bold;
         }
 
         .label {
@@ -65,6 +73,7 @@
 
         #radio-color {
             color: #415873;
+            /* color: #25A89D; */
         }
 
         .radio-container {
@@ -74,17 +83,17 @@
         }
 
         #filters {
-            margin-bottom: 10px;
+            margin-bottom: 18px;
         }
 
         .mapboxgl-popup-content {
             width: 300px;
-            background-color: rgba(245, 245, 245, 0.9);
+            background-color: rgba(255, 255, 255, 0.9);
             border-radius: 5px;
         }
 
         .mapboxgl-popup-content h3 {
-            background: #27B4A9;
+            background: #25A89D;
             color: #fff;
             margin: 0;
             display: block;
@@ -97,12 +106,17 @@
         .mapboxgl-popup-content h4 {
             margin-top: -14px;
             display: block;
-            padding: 0 10px 10px 10px ;
+            padding: 0 10px 10px 10px;
+            line-height: 1.5;
         }
 
         .mapboxgl-popup-content {
             padding: 0;
             width: 240px;
+        }
+
+        .portfolio {
+            margin-bottom: -10px;
         }
     </style>
 </head>
@@ -116,13 +130,19 @@
         <div class="col col--12 h-full relative">
             <div id="map" class="w-full h-full"></div>
             <div id="legend" class="w300 absolute top right mt18 mr18 round shadow-darken10 px18 py18 txt-s none">
-                <h1>Tracking Migrant Deaths (2014 - 2019)</h1>
-                <p>**Define migrant.** The <a href="https://missingmigrants.iom.int/">Missing Migrants Project</a>
-                    tracks incidents
-                    involving
-                    migrants, including refugees and asylum-seekers, who have
-                    died or gone missing in the process of migration towards an international destination. **include
-                    total** 1234567890</p>
+                <h1>Fatal Journeys</h1>
+                <h2>Tracking Migrant Deaths (2014 - 2019)</h2>
+                <p> Every year, hundreds of thousands of people leave their homes in search of a better life. Many are
+                    injured or killed, while many more go missing. The <a target="_blank" href="https://missingmigrants.iom.int/">U.N.’s
+                        International Organization for Migration's (IOM) Missing Migrants Project </a>tracks incidents
+                    involving migrants, including refugees and asylum-seekers, who have died or gone missing in the
+                    process of migration towards an international
+                    destination. More than 32,000 migrants around the world have lost their lives since the project
+                    began in 2014. All numbers reflect only those incidents of which IOM is aware; thus these data are
+                    minimum estimates only. The Missing Migrants Project collaborates
+                    with various government and non-government entities to collect data, and also draws on media and
+                    other available sources of information.
+                </p>
 
                 <div id="filters">
                     <label class="radio-container row1">
@@ -168,6 +188,7 @@
                         <div class="label">250+</div>
                     </div>
                 </div>
+                <p class="portfolio">Map design by <a target="_blank" href="https://efano.github.io/">Lis Fano</a></p>
             </div>
         </div>
     </div>
