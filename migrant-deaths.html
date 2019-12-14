@@ -17,7 +17,7 @@
         }
 
         #legend {
-            background-color: rgba(245, 245, 245, 1);
+            background-color: rgba(245, 245, 245, 0.9);
         }
 
         h1 {
@@ -33,7 +33,12 @@
 
         a {
             text-decoration: none;
-            color: #2dc4b2;
+            color: #27B4A9;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
         }
 
         .row {
@@ -70,6 +75,34 @@
 
         #filters {
             margin-bottom: 10px;
+        }
+
+        .mapboxgl-popup-content {
+            width: 300px;
+            background-color: rgba(245, 245, 245, 0.9);
+            border-radius: 5px;
+        }
+
+        .mapboxgl-popup-content h3 {
+            background: #27B4A9;
+            color: #fff;
+            margin: 0;
+            display: block;
+            padding: 8px 10px 4px 10px;
+            border-radius: 5px 5px 0 0;
+            font-weight: bolder;
+            font-size: 12px;
+        }
+
+        .mapboxgl-popup-content h4 {
+            margin-top: -14px;
+            display: block;
+            padding: 0 10px 10px 10px ;
+        }
+
+        .mapboxgl-popup-content {
+            padding: 0;
+            width: 240px;
         }
     </style>
 </head>
@@ -256,13 +289,14 @@
 
                     //Populate the popup and set its coordinates based on the feature found.
                     popup.setLngLat(e.features[0].geometry.coordinates)
-                        .setHTML("Number of Dead and Missing: " + "<b>" + (e.features[0]
-                                .properties["DM-T"].toLocaleString()) + "</b><br>" +
+                        .setHTML("<h3>" + "Number of Dead and Missing: " + (e.features[0]
+                                .properties["DM-T"].toLocaleString()) + "</h3><br>" + "<h4>" +
                             "Report Date: " + "<b>" + (e.features[0].properties["DATE"]) +
                             "</b><br>" +
                             "Cause of Death: " + "<b>" + (e.features[0].properties["CAUSE"]) +
                             "</b><br>" +
-                            "Description: " + "<b>" + (e.features[0].properties["DESC"]))
+                            "Description: " + "<b>" + (e.features[0].properties["DESC"]) +
+                            "</h4>")
                         .addTo(map);
                 });
 
