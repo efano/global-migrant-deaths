@@ -324,12 +324,12 @@
                     //Populate the popup and set its coordinates based on the feature found.
                     popup.setLngLat(e.features[0].geometry.coordinates)
                         .setHTML("<h3>" + "Number of Dead and Missing: " + (e.features[0]
-                                .properties["DM-T"].toLocaleString()) + "</h3><br>" + "<h4>" +
-                            "Report Date: " + "<b>" + (e.features[0].properties["DATE"]) +
-                            "</b><br>" +
-                            "Cause of Death: " + "<b>" + (e.features[0].properties["CAUSE"]) +
-                            "</b><br>" +
-                            "Description: " + "<b>" + (e.features[0].properties["DESC"]) +
+                                .properties["DM-T"].toLocaleString()) + "</h3><br>" + "<h4><b>" +
+                            "Report Date: " + "</b>" + (e.features[0].properties["DATE"]) +
+                            "<br><b>" +
+                            "Cause of Death: " + "</b>" + (e.features[0].properties["CAUSE"]) +
+                            "<br><b>" +
+                            "Description: " + "</b>" + (e.features[0].properties["DESC"]) +
                             "</h4>")
                         .addTo(map);
                 });
