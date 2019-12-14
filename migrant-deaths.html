@@ -48,6 +48,11 @@
             text-decoration: underline;
         }
 
+        #filters {
+            margin-bottom: 14px;
+            width: 120%;
+        }
+
         #radio-color {
             color: #415873;
             /* color: #25A89D; */
@@ -56,16 +61,17 @@
         .radio-container {
             font-weight: bold;
             margin-bottom: 4px;
-            margin-right: 16px;
+            margin-right: 14px;
         }
 
-        #filters {
-            margin-bottom: 14px;
+        .counts {
+            font-weight: normal;
+            font-size: 10px;
         }
 
         .dec {
-            font-size: 7px;
-            margin-top: -4px;
+            font-size: 8px;
+            margin-top: -2px;
         }
 
         .row {
@@ -80,14 +86,14 @@
         .labels {
             padding-bottom: 30px;
             width: 100%;
-            font-weight: bold;
         }
 
         .label {
             width: 13.2%;
             display: inline-block;
             text-align: left;
-            font-size: 12px;
+            font-size: 10px;
+            font-weight: normal;
             font-family: Arial, Sans-serif;
         }
 
@@ -143,7 +149,7 @@
                         International Organization for Migration's (IOM) Missing Migrants Project </a>tracks incidents
                     involving migrants, including refugees and asylum-seekers, who have died or gone missing in the
                     process of migration towards an international
-                    destination. More than 32,000 migrants around the world have lost their lives since the project
+                    destination. More than 34,200 migrants around the world have lost their lives since the project
                     began in 2014. The Missing Migrants Project collaborates
                     with various government and non-government entities to collect data, and also draws on media and
                     other available sources of information. The data only reflects those incidents of which IOM is
@@ -151,33 +157,33 @@
                 </p>
 
                 <div id="filters">
-                    <label class="radio-container row1">
+                    <label class="radio-container">
                         <input id="all" name="radio-basic" type="radio" value="all" checked="checked">
-                        <div class="radio radio--s-label mr6" id="radio-color"></div>All Years
+                        <div class="radio radio--s-label mr6" id="radio-color"></div>All Years<span class="counts">&nbsp;(34,266 deaths)</span>
                     </label><br>
-                    <label class="radio-container row2">
+                    <label class="radio-container">
                         <input id="2014" name="radio-basic" type="radio" value="2014">
-                        <div class="radio radio--s-label mr6" id="radio-color"></div>2014
+                        <div class="radio radio--s-label mr6" id="radio-color"></div>2014<span class="counts">&nbsp;(5,289 deaths)</span>
                     </label>
-                    <label class="radio-container row2">
-                        <input id="2016" name="radio-basic" type="radio" value="2016">
-                        <div class="radio radio--s-label mr6" id="radio-color"></div>2016
-                    </label>
-                    <label class="radio-container row2">
-                        <input id="2018" name="radio-basic" type="radio" value="2018">
-                        <div class="radio radio--s-label mr6" id="radio-color"></div>2018
-                    </label><br>
-                    <label class="radio-container row3">
-                        <input id="2015" name="radio-basic" type="radio" value="2015">
-                        <div class="radio radio--s-label mr6" id="radio-color"></div>2015
-                    </label>
-                    <label class="radio-container row3">
+                    <label class="radio-container">
                         <input id="2017" name="radio-basic" type="radio" value="2017">
-                        <div class="radio radio--s-label mr6" id="radio-color"></div>2017
+                        <div class="radio radio--s-label mr6" id="radio-color"></div>2017<span class="counts">&nbsp;(6,279 deaths)</span>
                     </label>
-                    <label class="radio-container row3">
+                    <label class="radio-container">
+                        <input id="2015" name="radio-basic" type="radio" value="2015">
+                        <div class="radio radio--s-label mr6" id="radio-color"></div>2015<span class="counts">&nbsp;(6,584 deaths)</span>
+                    </label>
+                    <label class="radio-container">
+                        <input id="2018" name="radio-basic" type="radio" value="2018">
+                        <div class="radio radio--s-label mr6" id="radio-color"></div>2018<span class="counts">&nbsp;(4,937 deaths)</span>
+                    </label>
+                    <label class="radio-container">
+                        <input id="2016" name="radio-basic" type="radio" value="2016">
+                        <div class="radio radio--s-label mr6" id="radio-color"></div>2016<span class="counts">&nbsp;(8,070 deaths)</span>
+                    </label>
+                    <label class="radio-container">
                         <input id="2019" name="radio-basic" type="radio" value="2019">
-                        <div class="radio radio--s-label mr6" id="radio-color"></div>2019*
+                        <div class="radio radio--s-label mr6" id="radio-color"></div>2019*<span class="counts">&nbsp;(3,107 deaths)</span>
                     </label>
                     <div class="dec">* through December 9th, 2019</div>
                 </div>
