@@ -29,7 +29,7 @@
         h2 {
             font-size: 14px;
             font-weight: bold;
-            margin-bottom: 12px
+            margin-bottom: 14px;
         }
 
         p {
@@ -48,19 +48,17 @@
         }
 
         #filters {
-            margin-bottom: 14px;
-            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .radio-container {
+            font-weight: bold;
+            margin-right: 10px;
         }
 
         #radio-color {
             color: #415873;
             /* color: #25A89D; */
-        }
-
-        .radio-container {
-            font-weight: bold;
-            margin-bottom: 4px;
-            margin-right: 10px;
         }
 
         .counts {
@@ -83,7 +81,7 @@
         }
 
         .labels {
-            padding-bottom: 30px;
+            padding-bottom: 34px;
             width: 100%;
         }
 
@@ -161,6 +159,21 @@
                     aware; thus these data are minimum estimates only.
                 </p>
 
+                <div class="session">
+                    <strong>Number of Dead and Missing</strong>
+                    <div class="row colors row-colors">
+                    </div>
+                    <div class="row labels">
+                        <div class="label">1</div>
+                        <div class="label">5</div>
+                        <div class="label">10</div>
+                        <div class="label">25</div>
+                        <div class="label">50</div>
+                        <div class="label">100</div>
+                        <div class="label">250+</div>
+                    </div>
+                </div>
+
                 <div id="filters">
                     <label class="radio-container">
                         <input id="all" name="radio-basic" type="radio" value="all" checked="checked">
@@ -192,20 +205,7 @@
                     </label>
                     <div class="dec">* through 09 December 2019</div>
                 </div>
-                <div class="session">
-                    <strong>Number of Dead and Missing</strong>
-                    <div class="row colors row-colors">
-                    </div>
-                    <div class="row labels">
-                        <div class="label">1</div>
-                        <div class="label">5</div>
-                        <div class="label">10</div>
-                        <div class="label">25</div>
-                        <div class="label">50</div>
-                        <div class="label">100</div>
-                        <div class="label">250+</div>
-                    </div>
-                </div>
+                
                 <p class="dataSource">Data source: <a target="_blank" href="https://missingmigrants.iom.int/downloads">Missing Migrant Project</a></p>
                 <p class="portfolio">Map design and development by <a target="_blank" href="https://efano.github.io/">Lis Fano</a></p>
             </div>
