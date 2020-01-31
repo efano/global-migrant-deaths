@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Migrant Deaths</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <link href="https://api.mapbox.com/mapbox-assembly/v0.24.0/assembly.min.css" rel="stylesheet">
+    <link href="https://api.mapbox.com/mapbox-gl-js/v1.6.0/mapbox-gl.css" rel="stylesheet" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #141F2B;
+            font-family: Arial, Sans-serif;
+            color: #253241;
+        }
+
+        #legend {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 8px
+        }
+
+        h2 {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 14px;
+        }
+
+        p {
+            font-size: 12px;
+            margin-bottom: 14px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #22998F;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        #filters {
+            margin-bottom: 10px;
+        }
+
+        .radio-container {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        #radio-color {
+            color: #415873;
+            /* color: #25A89D; */
+        }
+
+        .counts {
+            font-weight: normal;
+            font-size: 10px;
+        }
+
+        .dec {
+            font-size: 8px;
+            margin-top: -4px;
+        }
+
+        .row {
+            height: 12px;
+            width: 98%;
+        }
+
+        .colors {
+            background: linear-gradient(to right, #2dc4b2, #43ccde, #52cffe, #80b2f3, #96a4e8, #bf86c4, #d16b6b);
+        }
+
+        .labels {
+            padding-bottom: 34px;
+            width: 100%;
+        }
+
+        .label {
+            width: 13.2%;
+            display: inline-block;
+            text-align: left;
+            font-size: 10px;
+            font-weight: normal;
+            font-family: Arial, Sans-serif;
+        }
+
+        .mapboxgl-popup-content {
+            width: 300px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 5px;
+        }
+
+        .mapboxgl-popup-content h3 {
+            background: #25A89D;
+            color: #fff;
+            margin: 0;
+            display: block;
+            padding: 8px 10px 4px 10px;
+            border-radius: 5px 5px 0 0;
+            font-weight: bolder;
+            font-size: 12px;
+        }
+
+        .mapboxgl-popup-content h4 {
+            margin-top: -14px;
+            display: block;
+            padding: 0 10px 10px 10px;
+            line-height: 1.5;
+        }
+
+        .mapboxgl-popup-content {
+            padding: 0;
+            width: 240px;
+        }
+
+        .dataSource {
+            margin-bottom: -6px;
+            font-size: 10px;
+        }
+        
+        .portfolio {
+            margin-bottom: -10px;
+            font-size: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <script async defer src="https://api.mapbox.com/mapbox-assembly/v0.24.0/assembly.js"></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v1.6.0/mapbox-gl.js"></script>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+
+    <div class="grid absolute h-full w-full">
+        <div class="col col--12 h-full relative">
+            <div id="map" class="w-full h-full"></div>
+            <div id="legend" class="w300 absolute top right mt18 mr18 round shadow-darken10 px18 py18 txt-s none">
+                <h1>Fatal Journeys</h1>
+                <h2>Tracking Migrant Deaths (2014&ndash;2019)</h2>
+                <p> Every year, hundreds of thousands of people leave their homes in search of a better life. Many are
+                    injured or killed, while many more go missing. The <a target="_blank"
+                        href="https://missingmigrants.iom.int/">U.N.’s
+                        International Organization for Migration's (IOM) Missing Migrants Project </a>tracks incidents
+                    involving migrants, including refugees and asylum-seekers, who have died or gone missing in the
+                    process of migration towards an international
+                    destination. More than 34,200 migrants around the world have lost their lives since the project
+                    began in 2014. The Missing Migrants Project collaborates
+                    with various government and non-government entities to collect data, and also draws on media and
+                    other available sources of information. The data only reflects those incidents of which IOM is
+                    aware; thus these data are minimum estimates only.
+                </p>
+
+                <div class="session">
+                    <strong>Number of Dead and Missing</strong>
+                    <div class="row colors row-colors">
+                    </div>
+                    <div class="row labels">
+                        <div class="label">1</div>
+                        <div class="label">5</div>
+                        <div class="label">10</div>
+                        <div class="label">25</div>
+                        <div class="label">50</div>
+                        <div class="label">100</div>
+                        <div class="label">250+</div>
+                    </div>
+                </div>
+
+                <div id="filters">
+                    <label class="radio-container">
+                        <input id="all" name="radio-basic" type="radio" value="all" checked="checked">
+                        <div class="radio radio--s-label mr6" id="radio-color"></div>All Years<span class="counts">&nbsp;(34,266 deaths)</span>
+                    </label><br>
+                    <label class="radio-container">
+                        <input id="2014" name="radio-basic" type="radio" value="2014">
+                        <div class="radio radio--s-label mr6" id="radio-color"></div>2014<span class="counts">&nbsp;(5,289 deaths)</span>
+                    </label>
+                    <label class="radio-container">
+                        <input id="2017" name="radio-basic" type="radio" value="2017">
+                        <div class="radio radio--s-label mr6" id="radio-color"></div>2017<span class="counts">&nbsp;(6,279 deaths)</span>
+                    </label>
+                    <label class="radio-container">
+                        <input id="2015" name="radio-basic" type="radio" value="2015">
+                        <div class="radio radio--s-label mr6" id="radio-color"></div>2015<span class="counts">&nbsp;(6,584 deaths)</span>
+                    </label>
+                    <label class="radio-container">
+                        <input id="2018" name="radio-basic" type="radio" value="2018">
+                        <div class="radio radio--s-label mr6" id="radio-color"></div>2018<span class="counts">&nbsp;(4,937 deaths)</span>
+                    </label>
+                    <label class="radio-container">
+                        <input id="2016" name="radio-basic" type="radio" value="2016">
+                        <div class="radio radio--s-label mr6" id="radio-color"></div>2016<span class="counts">&nbsp;(8,070 deaths)</span>
+                    </label>
+                    <label class="radio-container">
+                        <input id="2019" name="radio-basic" type="radio" value="2019">
+                        <div class="radio radio--s-label mr6" id="radio-color"></div>2019*<span class="counts">&nbsp;(3,107 deaths)</span>
+                    </label>
+                    <div class="dec">* through 09 December 2019</div>
+                </div>
+                
+                <p class="dataSource">Data source: <a target="_blank" href="https://missingmigrants.iom.int/downloads">Missing Migrant Project</a></p>
+                <p class="portfolio">Map design & coding by <a target="_blank" href="https://efano.github.io/">Lis Fano</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        mapboxgl.accessToken =
+            "pk.eyJ1IjoibGlzZmFuby1tYXBib3giLCJhIjoiY2pvN3IyeGJ2MDFjZzNxcDB3YnJuN3hlbCJ9.r8HK2MZh-AiDtupL5c5s9Q";
+        var map = new mapboxgl.Map({
+            container: "map", // container id
+            style: "mapbox://styles/lisfano-mapbox/ck3dtcooa263c1cnztrl0xy36", // stylesheet location
+            center: [0, 26], // starting position [lng, lat]
+            zoom: 0 // starting zoom
+        });
+
+        map.addControl(new mapboxgl.NavigationControl(), "top-left");
+
+        // when the map is done loading
+        map.on("load", function () {
+            // request GEOJSON data
+            d3.json("data/migrant-deaths.json").then(geojson => {
+                // when loaded
+                console.log(geojson);
+                addLayer(geojson);
+
+                function addLayer(geojson) {
+                    // add the GeoJSON data as a mapbox gl layer
+                    map.addLayer({
+                        id: "deaths",
+                        type: "circle",
+                        source: {
+                            type: "geojson",
+                            data: geojson
+                        },
+                        paint: {
+                            "circle-radius": [
+                                "interpolate",
+                                ["linear"],
+                                ["number", ["get", "DM-T"]],
+                                0, 1.5,
+                                5, 4,
+                                100, 8,
+                                1022, 18
+                            ],
+
+                            "circle-color": [
+                                "interpolate",
+                                ["linear"],
+                                ["number", ["get", "DM-T"]],
+                                0, "#2dc4b2",
+                                1, "#33deca",
+                                5, "#43ccde",
+                                10, "#52cffe",
+                                20, "#69bff8",
+                                25, "#80b2f3",
+                                50, "#96a4e8",
+                                75, "#a995d8",
+                                100, "#bf86c4",
+                                250, "#ce79a9",
+                                500, "#d46f8a",
+                                1000, "#d16b6b"
+                            ],
+                            "circle-opacity": 0.8,
+                            "circle-stroke-color": "#555",
+                            "circle-stroke-width": 0.2,
+                        },
+                    });
+
+                    // radio button interactivity
+                    document.getElementById('filters').addEventListener('change', function (e) {
+                        var year = parseInt(e.target.value);
+
+                        // update the map filter
+                        if (document.getElementById('all').checked) {
+                            map.setFilter('deaths', null)
+                        } else {
+                            map.setFilter('deaths', ['==', ['number', ['get', 'YEAR']], year]);
+                        }
+                    });
+                };
+
+                // var bounds = turf.bbox(geojson);
+                // console.log("bounds: ", bounds);
+
+                // map will flyTo the bounds provided
+                map.fitBounds([-119.63429, -33.5177, 123.00626, 66.92998], {
+                    padding: {
+                        top: 10,
+                        bottom: 30,
+                        left: 50,
+                        right: 360
+                    }
+                });
+
+                var onZoomend = function () {
+                    // set the max bounds
+                    map.setMaxBounds(map.getBounds())
+
+                    // display the legend
+                    d3.select("#legend").classed("none", false);
+
+                    // remove the listener
+                    map.off("zoomend", onZoomend);
+                };
+
+                // when the map is done zooming
+                map.on("zoomend", onZoomend);
+
+                // Create a popup, but don"t add it to the map yet.
+                var popup = new mapboxgl.Popup({
+                    closeButton: false,
+                    closeOnClick: false
+                });
+
+                map.on("mousemove", "deaths", function (e) {
+                    var features = map.queryRenderedFeatures(e.point);
+
+                    // Change the cursor style as a UI affordance.
+                    map.getCanvas().style.cursor = "pointer";
+
+                    //Populate the popup and set its coordinates based on the feature found.
+                    popup.setLngLat(e.features[0].geometry.coordinates)
+                        .setHTML("<h3>" + "Number of Dead and Missing: " + (e.features[0]
+                                .properties["DM-T"].toLocaleString()) + "</h3><br>" + "<h4><b>" +
+                            "Report Date: " + "</b>" + (e.features[0].properties["DATE"]) +
+                            "<br><b>" +
+                            "Cause of Death: " + "</b>" + (e.features[0].properties["CAUSE"]) +
+                            "<br><b>" +
+                            "Description: " + "</b>" + (e.features[0].properties["DESC"]) +
+                            "</h4>")
+                        .addTo(map);
+                });
+
+                map.on("mouseleave", "deaths", function () {
+                    map.getCanvas().style.cursor = "";
+                    popup.remove();
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
