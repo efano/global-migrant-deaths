@@ -1,0 +1,130 @@
+        body {
+          margin: 0;
+          padding: 0;
+          background-color: #141F2B;
+          font-family: Arial, Sans-serif;
+          color: #253241;
+        }
+
+        #legend {
+          background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        h1 {
+          font-size: 24px;
+          font-weight: bold;
+          margin-bottom: 8px
+        }
+
+        h2 {
+          font-size: 14px;
+          font-weight: bold;
+          margin-bottom: 14px;
+        }
+
+        p {
+          font-size: 12px;
+          margin-bottom: 14px;
+        }
+
+        a {
+          text-decoration: none;
+          color: #22998F;
+          font-weight: bold;
+        }
+
+        a:hover {
+          text-decoration: underline;
+        }
+
+        #filters {
+          margin-bottom: 10px;
+        }
+
+        .radio-container {
+          font-weight: bold;
+          margin-right: 10px;
+        }
+
+        #radio-color1,
+        #radio-color2,
+        #radio-color3,
+        #radio-color4,
+        #radio-color5,
+        #radio-color6,
+        #radio-color7 {
+          color: #415873;
+          /* color: #25A89D; */
+        }
+
+        .counts {
+          font-weight: normal;
+          font-size: 10px;
+        }
+
+        .dec {
+          font-size: 8px;
+          margin-top: -4px;
+        }
+
+        .row {
+          height: 12px;
+          width: 98%;
+        }
+
+        .colors {
+          background: linear-gradient(to right, #2dc4b2, #43ccde, #52cffe, #80b2f3, #96a4e8, #bf86c4, #d16b6b);
+        }
+
+        .labels {
+          padding-bottom: 34px;
+          width: 100%;
+        }
+
+        .label {
+          width: 13.2%;
+          display: inline-block;
+          text-align: left;
+          font-size: 10px;
+          font-weight: normal;
+          font-family: Arial, Sans-serif;
+        }
+
+        .mapboxgl-popup-content {
+          width: 300px;
+          background-color: rgba(255, 255, 255, 0.9);
+          border-radius: 5px;
+        }
+
+        .mapboxgl-popup-content h3 {
+          background: #25A89D;
+          color: #fff;
+          margin: 0;
+          display: block;
+          padding: 8px 10px 4px 10px;
+          border-radius: 5px 5px 0 0;
+          font-weight: bolder;
+          font-size: 12px;
+        }
+
+        .mapboxgl-popup-content h4 {
+          margin-top: -14px;
+          display: block;
+          padding: 0 10px 10px 10px;
+          line-height: 1.5;
+        }
+
+        .mapboxgl-popup-content {
+          padding: 0;
+          width: 240px;
+        }
+
+        .dataSource {
+          margin-bottom: -6px;
+          font-size: 10px;
+        }
+
+        .portfolio {
+          margin-bottom: -10px;
+          font-size: 10px;
+        }
